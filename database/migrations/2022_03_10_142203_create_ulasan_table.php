@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMahasiswaTable extends Migration
+class CreateUlasanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateMahasiswaTable extends Migration
      */
     public function up()
     {
-        Schema::create('mahasiswa', function (Blueprint $table) {
+        Schema::create('ulasan', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('address');
-            $table->softDeletes();
+            $table->unsignedBigInteger('id_pembeli');
+            $table->integer('rating');
             $table->timestamps();
+
+            // Menambahkan foreign key constraint
+            $table->foreign('id_pembeli')->references('id')->on('pembeli');
         });
     }
 
@@ -29,6 +31,6 @@ class CreateMahasiswaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mahasiswa');
+        Schema::dropIfExists('ulasan');
     }
 }
